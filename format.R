@@ -4,7 +4,10 @@ format <- function (value, type){
     return ("error")
   }
   if (type == "p"){
-    if (value >= 0.05){
+    if (is.na(value)){
+      return ("-")
+    }
+    else if (value >= 0.05){
       return (round(value,2))
     } else if (value >=0.001) {
       return (round(value,3))
@@ -24,4 +27,13 @@ format <- function (value, type){
       return (signif(value,digits=1))
     }
   }
+}
+
+formatMatrix <- function (mtr, type)
+{
+  dim = dim(mtr)
+  ret2 = matrix(mapply(format, ret, type),dim)
+  dimnames(ret2) = dimnames(mtr)
+  
+  return(ret2)
 }
